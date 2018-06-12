@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Exercise-Intermediate</string>
+    <string name="world_cities">https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer</string>
+</resources>
