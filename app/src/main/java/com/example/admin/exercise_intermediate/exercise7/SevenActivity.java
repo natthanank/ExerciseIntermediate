@@ -29,8 +29,10 @@ import com.esri.arcgisruntime.mapping.Basemap;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.example.admin.exercise_intermediate.R;
+import com.google.common.collect.Iterators;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class SevenActivity extends AppCompatActivity {
 
@@ -151,8 +153,6 @@ public class SevenActivity extends AppCompatActivity {
             sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
 
-//        searchForState("gar");
-
     }
 
     public void searchForState(final String searchString) {
@@ -176,24 +176,27 @@ public class SevenActivity extends AppCompatActivity {
                     // call get on the future to get the result
                     FeatureQueryResult result = future.get();
                     // check there are some results
-                    if (result.iterator().hasNext()) {
+                    Iterator<Feature> featureIterator = result.iterator();
+                    Feature[] featureArray = Iterators.toArray(featureIterator, Feature.class);
+                    features.clear();
+                    for (Feature feature: featureArray) {
 
                         // get the extend of the first feature in the result to zoom to
-                        Feature feature = result.iterator().next();
+//                        Feature feature = result.iterator().next();
                         Log.i("Feature", feature.getAttributes().get("OWNER_NAME").toString());
 //                        Envelope envelope = feature.getGeometry().getExtent();
 //                        mMapView.setViewpointGeometryAsync(envelope, 10);
 
                         //Select the feature
                         mFeaturelayer2.selectFeature(feature);
-                        features.clear();
                         features.add(feature);
-                        recyclerView.setAdapter(new Ex7Adapter(features, SevenActivity.this, map));
 
                     }
-                    else {
-                        Toast.makeText(SevenActivity.this, "No states found with name: " + searchString, Toast.LENGTH_SHORT).show();
-                    }
+                    recyclerView.setAdapter(new Ex7Adapter(features, SevenActivity.this, map));
+
+//                    else {
+//                        Toast.makeText(SevenActivity.this, "No states found with name: " + searchString, Toast.LENGTH_SHORT).show();
+//                    }
                 } catch (Exception e) {
                     Toast.makeText(SevenActivity.this, "Feature search failed for: " + searchString + ". Error=" + e.getMessage(),
                             Toast.LENGTH_SHORT).show();

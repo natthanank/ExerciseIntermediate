@@ -94,6 +94,9 @@ public class Ex7Adapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return features.size();
+        if (features.size() < 5) {
+            return features.size();
+        }
+        return 5;
     }
 }

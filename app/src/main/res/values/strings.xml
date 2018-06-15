@@ -2,8 +2,20 @@
     <string name="app_name">Exercise-Intermediate</string>
     <string name="world_cities">https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer</string>
     <string name="world_topo_service">https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/</string>
-    <string name="sample_service_url">http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/MapServer/0</string>
+    <string name="sample_service_url">http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/0</string>
     <string name="sample_service_url_2">http://sampleserver6.arcgisonline.com/arcgis/rest/services/MontgomeryQuarters/MapServer/1</string>
     <string name="action_search">Search</string>
     <string name="search_hint">hint</string>
+    <string name="service_url_9_0">http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/FeatureServer/0</string>
+    <string name="service_url_9_1">http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/FeatureServer/1</string>
+    <string name="service_url_9_2">http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/FeatureServer/2</string>
+    <string name="route">https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="navigation_vector">http://www.arcgis.com/sharing/rest/content/items/dcbbba0edf094eaa81af19298b9c6247/resources/styles/root.json</string>
+    <string name="routing_service">http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route</string>
+    <string name="progress_title">Finding Route</string>
+    <string name="progress_message">Please wait&#8230;</string>
 </resources>
