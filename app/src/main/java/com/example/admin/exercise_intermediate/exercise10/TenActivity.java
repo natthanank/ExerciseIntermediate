@@ -5,7 +5,10 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetBehavior.BottomSheetCallback;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
@@ -67,15 +71,17 @@ public class TenActivity extends AppCompatActivity {
     private SimpleLineSymbol mRouteSymbol;
     private GraphicsOverlay mGraphicsOverlay;
 
-    private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
 
     private Button findRouteBtn;
     private Point mapPoint;
     private GraphicsOverlay graphicsOverlay;
 
     private ArrayList<Point> mapPoints;
+
+    private BottomSheetBehavior sheetBehavior;
+    private ConstraintLayout layoutBottomSheet;
+    private TextView routeText;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -95,8 +101,8 @@ public class TenActivity extends AppCompatActivity {
         // set the map to be displayed in this view
         mMapView.setMap(map);
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerList = findViewById(R.id.left_drawer);
+        routeText = findViewById(R.id.routeText);
 
         findRouteBtn = findViewById(R.id.findRouteBtn);
         final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) findRouteBtn.getLayoutParams();
@@ -153,7 +159,6 @@ public class TenActivity extends AppCompatActivity {
                     getSupportActionBar().setHomeButtonEnabled(true);
                     setTitle(getString(R.string.app_name));
                 }
-                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
                 // create RouteTask instance
                 mRouteTask = new RouteTask(getApplicationContext(), getString(R.string.routing_service));
@@ -190,13 +195,11 @@ public class TenActivity extends AppCompatActivity {
                                 // NOTE: to get turn-by-turn directions Route Parameters should set returnDirection flag as true
                                 final List<DirectionManeuver> directions = mRoute.getDirectionManeuvers();
 
-                                String[] directionsArray = new String[directions.size()];
+                                final String[] directionsArray = new String[directions.size()];
 
                                 for (DirectionManeuver dm : directions) {
                                     directionsArray[i++] = dm.getDirectionText();
                                 }
-                                Log.d("Direction", directions.get(0).getGeometry().getExtent().getXMin() + "");
-                                Log.d("Direction", directions.get(0).getGeometry().getExtent().getYMin() + "");
 
                                 // Set the adapter for the list view
                                 mDrawerList.setAdapter(new ArrayAdapter<>(getApplicationContext(),
@@ -205,10 +208,12 @@ public class TenActivity extends AppCompatActivity {
                                 mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                                         if (mGraphicsOverlay.getGraphics().size() > 3) {
                                             mGraphicsOverlay.getGraphics().remove(mGraphicsOverlay.getGraphics().size() - 1);
                                         }
-                                        mDrawerLayout.closeDrawers();
+                                        routeText.setText(directionsArray[position]);
+                                        routeText.setVisibility(View.VISIBLE);
                                         DirectionManeuver dm = directions.get(position);
                                         Geometry gm = dm.getGeometry();
                                         Viewpoint vp = new Viewpoint(gm.getExtent(), 20);
@@ -312,56 +317,32 @@ public class TenActivity extends AppCompatActivity {
      * set up the drawer
      */
     private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+        layoutBottomSheet = findViewById(R.id.bottom_sheet_7);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
             }
 
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
             }
-        };
+        });
 
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        super.onConfigurationChanged(newConfig);
-
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        // Activate the navigation drawer toggle
-        return (mDrawerToggle.onOptionsItemSelected(item)) || super.onOptionsItemSelected(item);
     }
 }
