@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="56dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    android:id="@+id/bottom_sheet_7">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Routing"
+        android:textColor="#fff"
+        android:id="@+id/bottom_sheet_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/colorAccent"/>
+
+    <!-- The navigation drawer -->
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="start"
+        android:background="#fff"
+        android:choiceMode="singleChoice"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_header"
+        app:layout_constraintStart_toStartOf="parent"
+        android:divider="@android:color/transparent" />
+
+</android.support.constraint.ConstraintLayout>

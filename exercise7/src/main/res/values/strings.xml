@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">exercise7</string>
+    <string name="sample_service_url">http://sampleserver6.arcgisonline.com/arcgis/rest/services/MontgomeryQuarters/MapServer/0</string>
+    <string name="sample_service_url_2">http://sampleserver6.arcgisonline.com/arcgis/rest/services/MontgomeryQuarters/MapServer/1</string>
+    <string name="world_topo_service">https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/</string>
+</resources>

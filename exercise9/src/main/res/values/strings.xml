@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">exercise9</string>
+    <string name="world_topo_service">https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/</string>
+    <string name="service_url">http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/FeatureServer/0</string>
+    <string name="service_url_1">http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/FeatureServer/1</string>
+    <string name="service_url_2">http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/FeatureServer/2</string>
+</resources>

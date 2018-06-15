@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">exercise10</string>
+    <string name="world_topo_service">https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/</string>
+    <string name="routing_service">http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route</string>
+</resources>
