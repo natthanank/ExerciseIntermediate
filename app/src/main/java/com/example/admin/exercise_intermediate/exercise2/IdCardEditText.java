@@ -3,6 +3,8 @@ package com.example.admin.exercise_intermediate.exercise2;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -24,7 +26,8 @@ import java.util.List;
 
 public class IdCardEditText extends FrameLayout {
 
-    EditText idEditText;
+    private EditText idEditText;
+    private String stringID;
 
     public IdCardEditText(@NonNull Context context) {
         super(context);
@@ -86,14 +89,6 @@ public class IdCardEditText extends FrameLayout {
     }
 
 
-    private String strJoin(List<String> aArr) {
-        StringBuilder sbStr = new StringBuilder();
-        for (int i = 0, il = aArr.size(); i < il; i++) {
-            sbStr.append(aArr.get(i));
-        }
-        return sbStr.toString();
-    }
-
     private void check() {
         Editable rawID = idEditText.getText();
         String id = rawID.toString();
@@ -104,5 +99,58 @@ public class IdCardEditText extends FrameLayout {
         } else {
             idEditText.setTextColor(Color.BLACK);
         }
+    }
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState ss = new SavedState(superState);
+        ss.stringID = this.stringID;
+        return ss;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        this.stringID = ss.stringID;
+        idEditText.setText(stringID);
+    }
+
+    private static class SavedState extends BaseSavedState {
+
+        String stringID;
+
+        public SavedState(Parcelable source) {
+            super(source);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            this.stringID = in.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeString(this.stringID);
+        }
+
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel parcel) {
+                return new SavedState(parcel);
+            }
+
+            @Override
+            public SavedState[] newArray(int i) {
+                return new SavedState[i];
+            }
+        };
     }
 }
