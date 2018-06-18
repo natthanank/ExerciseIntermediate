@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.geometry.Geometry;
 import com.esri.arcgisruntime.geometry.LinearUnit;
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud6527399236,none,HC5X0H4AH5E5LMZ59231");
 
         mapPoints = new ArrayList<>();
         mDrawerList = findViewById(R.id.left_drawer);
@@ -184,6 +187,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+                sheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+
             }
         });
 
@@ -223,30 +229,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupDrawer() {
         layoutBottomSheet = findViewById(R.id.bottom_sheet_7);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                        break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View view, float v) {
-
-            }
-        });
+        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
     }
 
@@ -259,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
         //[DocRef: Name=Picture Marker Symbol Drawable-android, Category=Fundamentals, Topic=Symbols and Renderers]
         //Create a picture marker symbol from an app resource
-        BitmapDrawable startDrawable = (BitmapDrawable) ContextCompat.getDrawable(this, R.drawable.arcgisruntime_location_display_compass_symbol);
+        BitmapDrawable startDrawable = (BitmapDrawable) ContextCompat.getDrawable(this, R.drawable.arcgisruntime_location_display_default_symbol);
         final PictureMarkerSymbol pinSourceSymbol;
         try {
             pinSourceSymbol = PictureMarkerSymbol.createAsync(startDrawable).get();
