@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:id="@+id/nav"
+        android:outlineProvider="bounds">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab1"
+            android:outlineProvider="bounds"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="ArcGIS Desktop"
+            android:layout_margin="10dp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/tab1"
+            app:layout_constraintBottom_toTopOf="@id/tab2"
+            android:id="@+id/separate"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab2"
+            android:outlineProvider="bounds"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab1"
+            android:text="ArcGIS Website"
+            android:layout_margin="10dp"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@id/nav"
+        android:background="@android:color/darker_gray"/>
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:src="@drawable/desktop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/nav"
+        app:layout_constraintTop_toBottomOf="@id/backBtn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/header"
+        app:layout_constraintStart_toEndOf="@id/nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        android:layout_marginTop="15dp"
+        android:text="ArcGIS Desktop"
+        android:textStyle="bold"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="ArcGIS Desktop is the key to realizing the advantage of location awareness. Collect and manage data, create professional maps, perform traditional and advanced spatial analysis, and solve real problems. Make a difference and add tangible value for your organization, your community, and the world."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/nav"
+        app:layout_constraintTop_toBottomOf="@id/header" />
+
+</android.support.constraint.ConstraintLayout>

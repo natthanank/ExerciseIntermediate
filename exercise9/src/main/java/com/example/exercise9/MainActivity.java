@@ -120,10 +120,10 @@ public class MainActivity extends AppCompatActivity {
         // show the buffered region as a green graphic
         Graphic bufferGraphic = new Graphic(bufferGeometry,fillSymbol);
         graphicsOverlay.getGraphics().add(bufferGraphic);
-        // show a red marker where clicked
-        Graphic markerGraphic = new Graphic(mapPoint, new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE,
-                0xFFFF0000, 5));
-        graphicsOverlay.getGraphics().add(markerGraphic);
+//        // show a red marker where clicked
+//        Graphic markerGraphic = new Graphic(mapPoint, new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE,
+//                0xFFFF0000, 5));
+//        graphicsOverlay.getGraphics().add(markerGraphic);
 
         search("Definitely a manatee", bufferGeometry);
     }

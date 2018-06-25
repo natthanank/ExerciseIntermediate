@@ -277,7 +277,6 @@ public class MainActivity extends AppCompatActivity {
                     mGraphicsOverlay.getGraphics().add(destinationGraphic);
                 }
             });
-            pinDestinationSymbol.setOffsetY(20);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
